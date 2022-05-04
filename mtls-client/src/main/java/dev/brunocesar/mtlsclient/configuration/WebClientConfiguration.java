@@ -46,21 +46,21 @@ public class WebClientConfiguration {
     }
 
     private KeyManagerFactory getKeyManagerFactory() throws Exception {
-        try (FileInputStream keyStoreFileInputStream = new FileInputStream(ResourceUtils.getFile("classpath:keystore/keystore.p12"))) {
-            KeyStore keyStore = KeyStore.getInstance("pkcs12");
-            keyStore.load(keyStoreFileInputStream, "some-pass".toCharArray());
+        try (FileInputStream keyStoreFileInputStream = new FileInputStream(ResourceUtils.getFile("classpath:identity.jks"))) {
+            KeyStore keyStore = KeyStore.getInstance("jks");
+            keyStore.load(keyStoreFileInputStream, "secret".toCharArray());
 
             KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
-            keyManagerFactory.init(keyStore, "some-pass".toCharArray());
+            keyManagerFactory.init(keyStore, "secret".toCharArray());
 
             return keyManagerFactory;
         }
     }
 
     private TrustManagerFactory getTrustManagerFactory() throws Exception {
-        try (FileInputStream trustStoreFileInputStream = new FileInputStream(ResourceUtils.getFile("classpath:truststore/truststore.p12"))) {
-            KeyStore keyStore = KeyStore.getInstance("pkcs12");
-            keyStore.load(trustStoreFileInputStream, "some-pass".toCharArray());
+        try (FileInputStream trustStoreFileInputStream = new FileInputStream(ResourceUtils.getFile("classpath:truststore.jks"))) {
+            KeyStore keyStore = KeyStore.getInstance("jks");
+            keyStore.load(trustStoreFileInputStream, "secret".toCharArray());
 
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
             trustManagerFactory.init(keyStore);
